@@ -1,17 +1,17 @@
 package com.fasttrackit.BugetPersonal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity
-@Data
+//@Data
+@NoArgsConstructor
 public class Venit {
 
     @Id
@@ -20,17 +20,17 @@ public class Venit {
     @Column
     private double valoare;
     @Column
-    private Date data;
+    private Date dataVenit;
     @Column
     private TipVenit tip;
 
     @OneToMany(mappedBy = "venit", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Cheltuiala> cheltuieli;
 
-    public Venit(long id, double valoare, Date data, TipVenit tip) {
-        this.id = id;
-        this.valoare = valoare;
-        this.data = data;
-        this.tip = tip;
-    }
+//    public Venit(long id, double valoare, Date data, TipVenit tip) {
+//        this.id = id;
+//        this.valoare = valoare;
+//        this.data = data;
+//        this.tip = tip;
+//    }
 }

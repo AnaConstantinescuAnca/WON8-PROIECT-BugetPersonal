@@ -21,8 +21,6 @@ public class VenitReader {
     @Value("{file.venituri}")
     private String fileVenituriPath;
 
-    @Value("{file.cheltuieli")
-    private String fileCheltuieliPath;
 
     public List<Venit> getVenituri() {
         try {
@@ -35,20 +33,19 @@ public class VenitReader {
     }
 
     private Venit lineToVenituri(String line)  {
-        String[] venitParts = line.split("\\|");
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
-        Date date1 = null;
+        Date data = null;
 
         try {
-            date1 = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+            data = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
         }
         catch (ParseException exception){
-
+            exception.printStackTrace();
         }
 
-        return new Venit(Long.parseLong(venitParts[0]), Double.parseDouble(venitParts[2]),
-                date1, TipVenit.valueOf(venitParts[3]));
+        return new Venit(Long.parseLong(splitLine[0]), Double.parseDouble(splitLine[2]),
+                 data,TipVenit.valueOf(splitLine[3]));
 
     }
 

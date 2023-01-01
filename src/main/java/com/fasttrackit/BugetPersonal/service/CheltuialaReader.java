@@ -33,7 +33,7 @@ public class CheltuialaReader {
     }
 
     private Cheltuiala lineToCheltuieli(String line)  {
-        String[] cheltuitParts = line.split("\\|");
+       // String[] cheltuitParts = line.split("\\|");
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
         Date date1 = null;
@@ -42,11 +42,11 @@ public class CheltuialaReader {
             date1 = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
         }
         catch (ParseException exception){
-
+                exception.printStackTrace();
         }
 
-        return new Cheltuiala(Long.parseLong(cheltuitParts[0]), Double.parseDouble(cheltuitParts[2]),
-                date1, TipCheltuiala.valueOf(cheltuitParts[3]));
+        return new Cheltuiala(Long.parseLong(splitLine[0]), Double.parseDouble(splitLine[2]),
+                date1, TipCheltuiala.valueOf(splitLine[3]));
 
     }
 
