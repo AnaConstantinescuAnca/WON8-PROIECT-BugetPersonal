@@ -16,21 +16,21 @@ public class Venit {
 
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @Column
     private double valoare;
     @Column
-    private Date dataVenit;
+    private Date data;
     @Column
     private TipVenit tip;
 
     @OneToMany(mappedBy = "venit", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Cheltuiala> cheltuieli;
 
-//    public Venit(long id, double valoare, Date data, TipVenit tip) {
-//        this.id = id;
-//        this.valoare = valoare;
-//        this.data = data;
-//        this.tip = tip;
-//    }
+    public Venit(int id, double valoare, Date data, TipVenit tip) {
+        this.id = id;
+        this.valoare = valoare;
+        this.data = data;
+        this.tip = tip;
+    }
 }

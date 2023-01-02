@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
+import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -27,9 +28,8 @@ public class VenitReader {
             return Files.lines(Path.of(fileVenituriPath))
                     .map(this::lineToVenituri)
                     .collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e){
+            throw new RuntimeException(e);}
     }
 
     private Venit lineToVenituri(String line)  {
@@ -44,7 +44,7 @@ public class VenitReader {
             exception.printStackTrace();
         }
 
-        return new Venit(Long.parseLong(splitLine[0]), Double.parseDouble(splitLine[2]),
+        return new Venit(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
                  data,TipVenit.valueOf(splitLine[3]));
 
     }

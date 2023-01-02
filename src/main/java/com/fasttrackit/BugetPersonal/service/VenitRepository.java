@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface VenitRepository extends JpaRepository<Venit, Long> {
+public interface VenitRepository extends JpaRepository<Venit, Integer> {
     // List<Venit> findByData(Date data);
 
 }

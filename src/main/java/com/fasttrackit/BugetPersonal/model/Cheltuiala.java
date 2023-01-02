@@ -1,11 +1,9 @@
 package com.fasttrackit.BugetPersonal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -15,7 +13,7 @@ import java.util.Date;
 public class Cheltuiala {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @Column
     private double valoare;
     @Column
@@ -23,4 +21,14 @@ public class Cheltuiala {
     @Column
     private TipCheltuiala tip;
 
+    @ManyToOne
+    @JsonIgnore
+    private Venit venit;
+
+    public Cheltuiala(int id, double valoare, Date data, TipCheltuiala tip) {
+        this.id = id;
+        this.valoare = valoare;
+        this.data = data;
+        this.tip = tip;
+    }
 }

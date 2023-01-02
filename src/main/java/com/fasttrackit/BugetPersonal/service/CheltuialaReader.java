@@ -45,7 +45,7 @@ public class CheltuialaReader {
                 exception.printStackTrace();
         }
 
-        return new Cheltuiala(Long.parseLong(splitLine[0]), Double.parseDouble(splitLine[2]),
+        return new Cheltuiala(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
                 date1, TipCheltuiala.valueOf(splitLine[3]));
 
     }
