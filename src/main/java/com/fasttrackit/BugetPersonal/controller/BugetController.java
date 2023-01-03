@@ -12,19 +12,20 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = {"venituri", "cheltuieli"})  //http://localhost:8080/venituri; //http://localhost:8080/cheltuieli
+//@RequestMapping(value = {"venituri", "cheltuieli"})  //http://localhost:8080/venituri; //http://localhost:8080/cheltuieli
+@RequestMapping(value = "buget")  //http://localhost:8080/buget;
 
-public class BugetController {
+ public class BugetController {
     private final BugetService bugetService;
 
-    @GetMapping
+    @GetMapping(value="/venituri")
       public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
                                 @RequestParam(required = false) Date dataVenit) {
         return bugetService.getAllVenituri().stream().toList();
 
     }
 
-    @GetMapping
+    @GetMapping(value="/cheltuieli")
     public List<Cheltuiala> getAllCheltuieli(@RequestParam(required = false) Double valoare,
                                    @RequestParam(required = false) Date dataVenit) {
         return bugetService.getAllCheltuieli().stream().toList();
