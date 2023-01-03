@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Repository
 public class CheltuialaReader {
 
-    @Value("{file.cheltuieli")
+    @Value("${file.cheltuieli}")
     private String fileCheltuieliPath;
 
     public List<Cheltuiala> getCheltuieli() {

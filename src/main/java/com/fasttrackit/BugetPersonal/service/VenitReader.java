@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class VenitReader {
-    @Value("{file.venituri}")
+    @Value("${file.venituri}")
     private String fileVenituriPath;
 
 
