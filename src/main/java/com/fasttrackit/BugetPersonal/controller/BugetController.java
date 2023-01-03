@@ -32,19 +32,19 @@ import java.util.List;
 
     }
 
-    @GetMapping("{id}") // GET http://host:port/venituri/3
+    @GetMapping("/venituri/{id}") // GET http://host:port/buget/venituri/3
     public Venit getById(@PathVariable int id) {
         Venit venit = bugetService.getById(id);
         venit.getCheltuieli().stream().count();
         return venit;
     }
 
-    @PostMapping // POST http://host:port/venituri
+    @PostMapping(value = "/venituri") // POST http://host:port/buget/venituri
     public Venit add(@RequestBody Venit venit) {
         return bugetService.add(venit);
     }
 
-    @PostMapping // POST http://host:port/cheltuieli
+    @PostMapping(value="/cheltuieli") // POST http://host:port/buget/cheltuieli
     public Cheltuiala add(@RequestBody Cheltuiala cheltuiala) {
         return bugetService.add(cheltuiala);
     }
