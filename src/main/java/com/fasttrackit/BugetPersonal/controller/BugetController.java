@@ -15,20 +15,20 @@ import java.util.List;
 //@RequestMapping(value = {"venituri", "cheltuieli"})  //http://localhost:8080/venituri; //http://localhost:8080/cheltuieli
 @RequestMapping(value = "buget")  //http://localhost:8080/buget;
 
- public class BugetController {
+public class BugetController {
     private final BugetService bugetService;
 
-    @GetMapping(value="/venituri")
-      public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
-                                @RequestParam(required = false) Date dataVenit) {
-        return bugetService.getVenituriFiltered(valoare, dataVenit).stream().toList();
+    @GetMapping(value = "/venituri")
+    public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
+                                      @RequestParam(required = false) Date data) {
+        return bugetService.getVenituriFiltered(valoare, data).stream().toList();
         //return bugetService.getAllVenituri().stream().toList();
 
     }
 
-    @GetMapping(value="/cheltuieli")
+    @GetMapping(value = "/cheltuieli")
     public List<Cheltuiala> getAllCheltuieli(@RequestParam(required = false) Double valoare,
-                                   @RequestParam(required = false) Date dataVenit) {
+                                             @RequestParam(required = false) Date data) {
         return bugetService.getAllCheltuieli().stream().toList();
 
     }
@@ -40,19 +40,26 @@ import java.util.List;
         return venit;
     }
 
+    @DeleteMapping("/venituri/{id}") // DELETE http://host:port/buget/venituri/3
+    public Venit deleteVenitById(@PathVariable int id) {
+        return bugetService.deleteVenitById(id);
+
+    }
+
     @PostMapping(value = "/venituri") // POST http://host:port/buget/venituri
     public Venit add(@RequestBody Venit venit) {
         return bugetService.add(venit);
     }
 
-    @PostMapping(value="/cheltuieli") // POST http://host:port/buget/cheltuieli
+    @PostMapping(value = "/cheltuieli") // POST http://host:port/buget/cheltuieli
     public Cheltuiala add(@RequestBody Cheltuiala cheltuiala) {
         return bugetService.add(cheltuiala);
     }
+    //insert into cheltuiala (id,  data, tip, valoare, venit_id) values(104, '2023-01-01 00:00:00', 1, 101, 4)
 
 
     @PostMapping("/venituri/{id}/cheltuieli")
-    Venit addCheltuialaToVenit(@PathVariable int id, @RequestBody Cheltuiala cheltuiala){
+    Venit addCheltuialaToVenit(@PathVariable int id, @RequestBody Cheltuiala cheltuiala) {
         return bugetService.addCheltuialaToVenit(id, cheltuiala);
         //return countryService.addCityToCountry(id, city);
     }

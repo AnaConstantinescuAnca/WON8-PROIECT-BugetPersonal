@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface CheltuialaRepository extends JpaRepository<Cheltuiala, Integer> {
    // List<Cheltuiala> findByData(Date data);
+
+
+
 }

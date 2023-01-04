@@ -45,8 +45,8 @@ public class BugetService {
                 .orElseThrow(() -> new ResourceNotFoundException("Venitul lipseste", id));
     }
 
-    public List<Venit> getVenituriFiltered(Double valoare, Date dataVenit) {
-        return venitRepository.getByValoareDataVenit(valoare, dataVenit);
+    public List<Venit> getVenituriFiltered(Double valoare, Date data) {
+        return venitRepository.getByValoareDataVenit(valoare, data);
     }
 
     public Venit addCheltuialaToVenit(int id, Cheltuiala cheltuiala) {
@@ -54,5 +54,11 @@ public class BugetService {
         cheltuiala.setVenit(venit);
         venit.getCheltuieli().add(cheltuiala);
         return venitRepository.save(venit);
+    }
+
+    public Venit deleteVenitById(int id) {
+        Venit venitToBeDeleted = getById(id);
+        venitRepository.deleteById(id);
+        return venitToBeDeleted;
     }
 }
