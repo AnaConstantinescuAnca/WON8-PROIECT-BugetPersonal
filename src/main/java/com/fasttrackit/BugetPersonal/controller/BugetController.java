@@ -21,7 +21,8 @@ import java.util.List;
     @GetMapping(value="/venituri")
       public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
                                 @RequestParam(required = false) Date dataVenit) {
-        return bugetService.getAllVenituri().stream().toList();
+        return bugetService.getVenituriFiltered(valoare, dataVenit).stream().toList();
+        //return bugetService.getAllVenituri().stream().toList();
 
     }
 
@@ -48,5 +49,13 @@ import java.util.List;
     public Cheltuiala add(@RequestBody Cheltuiala cheltuiala) {
         return bugetService.add(cheltuiala);
     }
+
+
+    @PostMapping("/venituri/{id}/cheltuieli")
+    Venit addCheltuialaToVenit(@PathVariable int id, @RequestBody Cheltuiala cheltuiala){
+        return bugetService.addCheltuialaToVenit(id, cheltuiala);
+        //return countryService.addCityToCountry(id, city);
+    }
+
 
 }
