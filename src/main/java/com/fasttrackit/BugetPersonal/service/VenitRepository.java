@@ -1,5 +1,6 @@
 package com.fasttrackit.BugetPersonal.service;
 
+import com.fasttrackit.BugetPersonal.model.Cheltuiala;
 import com.fasttrackit.BugetPersonal.model.Venit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,8 @@ public interface VenitRepository extends JpaRepository<Venit, Integer> {
                                       @Param("dataVenit") LocalDate dataVenit);
 
 
+    @Query("select c from Cheltuiala c where (c.valoare=:valoare or :valoare is null)" +
+            " and (to_char(c.data, 'dd-mm-yyyy')=:dataCheltuiala or :dataCheltuiala is null)")
+    List<Cheltuiala> getByValoareDataCheltuiala(@Param("valoare") Double valoare,
+                                                @Param("dataCheltuiala") Date dataCheltuiala);
 }

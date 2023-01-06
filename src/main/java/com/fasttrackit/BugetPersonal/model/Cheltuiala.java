@@ -21,6 +21,7 @@ public class Cheltuiala {
     @Column
     private TipCheltuiala tip;
 
+
     @ManyToOne
     @JsonIgnore
     private Venit venit;

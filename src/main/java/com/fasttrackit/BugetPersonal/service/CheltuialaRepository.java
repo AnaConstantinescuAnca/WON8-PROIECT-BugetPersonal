@@ -12,6 +12,6 @@ import java.util.List;
 public interface CheltuialaRepository extends JpaRepository<Cheltuiala, Integer> {
    // List<Cheltuiala> findByData(Date data);
 
-
+//select id, to_char(data,'dd-mm-yyyy') , month(data)  , year(data),  tip, valoare, venit_id from cheltuiala  where ((month(data)>=10 and year(data)=2022) or year(data)>2022) order by data
 
 }

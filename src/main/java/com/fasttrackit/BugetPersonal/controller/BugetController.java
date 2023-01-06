@@ -31,19 +31,25 @@ public class BugetController {
     @GetMapping(value = "/cheltuieli")
     public List<Cheltuiala> getAllCheltuieli(@RequestParam(required = false) Double valoare,
                                              @RequestParam(required = false) Date data) {
-        return bugetService.getAllCheltuieli().stream().toList();
+        return bugetService.getCheltuieliFiltered(valoare, data).stream().toList();
 
     }
 
     @GetMapping("/venituri/{id}") // GET http://host:port/buget/venituri/3
-    public Venit getById(@PathVariable int id) {
-        Venit venit = bugetService.getById(id);
+    public Venit getById(@PathVariable Integer id) {
+        Venit venit = bugetService.getByIdVenit(id);
         venit.getCheltuieli().stream().count();
         return venit;
     }
 
+    @GetMapping("/cheltuieli/{id}") // GET http://host:port/buget/venituri/3
+    public Cheltuiala getByIdCheltuiala(@PathVariable Integer id) {
+        Cheltuiala cheltuiala = bugetService.getByIdCheltuiala(id);
+        cheltuiala.getId();
+        return cheltuiala;
+    }
     @DeleteMapping("/venituri/{id}") // DELETE http://host:port/buget/venituri/3
-    public Venit deleteVenitById(@PathVariable int id) {
+    public Venit deleteVenitById(@PathVariable Integer id) {
         return bugetService.deleteVenitById(id);
 
     }
@@ -61,7 +67,7 @@ public class BugetController {
 
 
     @PostMapping("/venituri/{id}/cheltuieli")
-    Venit addCheltuialaToVenit(@PathVariable int id, @RequestBody Cheltuiala cheltuiala) {
+    Venit addCheltuialaToVenit(@PathVariable Integer id, @RequestBody Cheltuiala cheltuiala) {
         return bugetService.addCheltuialaToVenit(id, cheltuiala);
         //return countryService.addCityToCountry(id, city);
     }

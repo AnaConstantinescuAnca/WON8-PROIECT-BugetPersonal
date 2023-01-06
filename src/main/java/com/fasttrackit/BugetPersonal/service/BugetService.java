@@ -41,25 +41,36 @@ public class BugetService {
         return cheltuialaRepository.save(cheltuiala);
     }
 
-    public Venit getById(int id) {
+    public Venit getByIdVenit(int id) {
         return venitRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Venitul lipseste", id));
+    }
+
+    public Cheltuiala getByIdCheltuiala(Integer id) {
+        return cheltuialaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cheltuiala lipseste", id));
     }
 
     public List<Venit> getVenituriFiltered(Double valoare, LocalDate data) {
         return venitRepository.getByValoareDataVenit(valoare, data);
     }
 
+    public List<Cheltuiala> getCheltuieliFiltered(Double valoare, Date data) {
+        return venitRepository.getByValoareDataCheltuiala(valoare, data);
+    }
+
     public Venit addCheltuialaToVenit(int id, Cheltuiala cheltuiala) {
-        Venit venit = getById(id);
+        Venit venit = getByIdVenit(id);
         cheltuiala.setVenit(venit);
         venit.getCheltuieli().add(cheltuiala);
         return venitRepository.save(venit);
     }
 
     public Venit deleteVenitById(int id) {
-        Venit venitToBeDeleted = getById(id);
+        Venit venitToBeDeleted = getByIdVenit(id);
         venitRepository.deleteById(id);
         return venitToBeDeleted;
     }
+
+
 }
