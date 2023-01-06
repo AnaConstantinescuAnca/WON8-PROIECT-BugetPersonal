@@ -5,6 +5,7 @@ import com.fasttrackit.BugetPersonal.model.Cheltuiala;
 import com.fasttrackit.BugetPersonal.model.Venit;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +46,7 @@ public class BugetService {
                 .orElseThrow(() -> new ResourceNotFoundException("Venitul lipseste", id));
     }
 
-    public List<Venit> getVenituriFiltered(Double valoare, Date data) {
+    public List<Venit> getVenituriFiltered(Double valoare, LocalDate data) {
         return venitRepository.getByValoareDataVenit(valoare, data);
     }
 

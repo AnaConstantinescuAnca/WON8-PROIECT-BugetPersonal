@@ -3,6 +3,7 @@ package com.fasttrackit.BugetPersonal.service;
 import com.fasttrackit.BugetPersonal.model.TipVenit;
 import com.fasttrackit.BugetPersonal.model.Venit;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,20 +35,33 @@ public class VenitReader {
             throw new RuntimeException(e);}
     }
 
-    private Venit lineToVenituri(String line)  {
+    private Venit lineToVenituri(String line) {
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
-        Date data = null;
+//        LocalDate data = null;
+//
+//        try {
+//            data = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+//        }
+//        catch (ParseException exception){
+//            exception.printStackTrace();
+//        }
 
+
+        LocalDate data = null;
         try {
-            data = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+            //LocalDate data = LocalDate.parse(dataParts);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+            data = (LocalDate) DateTimeFormatter.ofPattern("dd-MM-YYYY").parse(dataParts);
+
+        } catch
+        (Exception e) {
+            System.out.println(e);
         }
-        catch (ParseException exception){
-            exception.printStackTrace();
-        }
+        ;
 
         return new Venit(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
-                 data,TipVenit.valueOf(splitLine[3]));
+                data, TipVenit.valueOf(splitLine[3]));
 
     }
 

@@ -6,6 +6,7 @@ import com.fasttrackit.BugetPersonal.service.BugetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class BugetController {
 
     @GetMapping(value = "/venituri")
     public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
-                                      @RequestParam(required = false) Date data) {
+                                      @RequestParam(required = false) LocalDate data)
+                                        {
         return bugetService.getVenituriFiltered(valoare, data).stream().toList();
         //return bugetService.getAllVenituri().stream().toList();
 
