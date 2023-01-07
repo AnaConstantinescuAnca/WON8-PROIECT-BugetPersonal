@@ -20,9 +20,8 @@ public interface VenitRepository extends JpaRepository<Venit, Integer> {
 //            "WHERE (v.data=:data or :data is null) and (v.valoare=:valoare or :valoare is null)")
 
 
-    @Query(value = "SELECT * FROM Venit v WHERE (v.data=:data or :data is null)" +
-            " and (v.valoare=:valoare or :valoare is null)",
-            nativeQuery = true)
+    @Query("SELECT v FROM Venit v WHERE (v.data=:data or :data is null)" +
+            " and (v.valoare=:valoare or :valoare is null)")
 
 //    @Query("select v from Venit v where (v.valoare=:valoare or :valoare is null)" +
 //            " and (v.data=:data or :data is null)")

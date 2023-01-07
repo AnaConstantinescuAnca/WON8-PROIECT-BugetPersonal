@@ -12,9 +12,8 @@ import java.util.List;
 
 @Repository
 public interface CheltuialaRepository extends JpaRepository<Cheltuiala, Integer> {
-    @Query(value = "SELECT * FROM Cheltuiala c WHERE (c.data=:data or :data is null)" +
-            " and (c.valoare=:valoare or :valoare is null)",
-            nativeQuery = true)
+    @Query("SELECT c FROM Cheltuiala c WHERE (c.data=:data or :data is null)" +
+            " and (c.valoare=:valoare or :valoare is null)")
     List<Cheltuiala> getByValoareDataCheltuiala(@Param("valoare") Double valoare,
                                                 @Param("data") Date data);
 
