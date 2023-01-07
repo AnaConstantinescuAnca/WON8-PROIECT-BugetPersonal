@@ -22,14 +22,14 @@ public class Venit {
     @Column
     private double valoare;
     @Column
-    private LocalDate data;
+    private Date data;
     @Column
     private TipVenit tip;
 
     @OneToMany(mappedBy = "venit", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Cheltuiala> cheltuieli;
 
-    public Venit(int id, double valoare, LocalDate data, TipVenit tip) {
+    public Venit(int id, double valoare, Date data, TipVenit tip) {
         this.id = id;
         this.valoare = valoare;
         this.data = data;

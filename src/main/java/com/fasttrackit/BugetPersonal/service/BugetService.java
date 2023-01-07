@@ -51,12 +51,12 @@ public class BugetService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cheltuiala lipseste", id));
     }
 
-    public List<Venit> getVenituriFiltered(Double valoare, LocalDate data) {
+    public List<Venit> getVenituriFiltered(Double valoare, Date data) {
         return venitRepository.getByValoareDataVenit(valoare, data);
     }
 
     public List<Cheltuiala> getCheltuieliFiltered(Double valoare, Date data) {
-        return venitRepository.getByValoareDataCheltuiala(valoare, data);
+        return cheltuialaRepository.getByValoareDataCheltuiala(valoare, data);
     }
 
     public Venit addCheltuialaToVenit(int id, Cheltuiala cheltuiala) {
@@ -73,4 +73,26 @@ public class BugetService {
     }
 
 
-}
+    public Cheltuiala deleteCheltuialaById(int id) {
+        Cheltuiala cheltuialaToBeDeleted = getByIdCheltuiala(id);
+        cheltuialaRepository.deleteById(id);
+        return cheltuialaToBeDeleted;
+    }
+
+    public Venit updateVenit(int id, Venit venit) {
+        Venit venitToBeUpdated = getByIdVenit(id);
+        venitToBeUpdated.setData(venit.getData());
+        venitToBeUpdated.setTip(venit.getTip());
+        venitToBeUpdated.setValoare(venit.getValoare());
+        return venitRepository.save(venitToBeUpdated);
+    }
+
+    public Cheltuiala updateCheltuiala(int id, Cheltuiala cheltuiala) {
+        Cheltuiala cheltuialaToBeUpdated = getByIdCheltuiala(id);
+        cheltuialaToBeUpdated.setData(cheltuiala.getData());
+        cheltuialaToBeUpdated.setTip(cheltuiala.getTip());
+        cheltuialaToBeUpdated.setValoare(cheltuiala.getValoare());
+        return cheltuialaRepository.save(cheltuialaToBeUpdated);
+    }
+
+   }

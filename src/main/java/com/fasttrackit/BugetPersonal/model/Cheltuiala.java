@@ -22,7 +22,7 @@ public class Cheltuiala {
     private TipCheltuiala tip;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Venit venit;
 

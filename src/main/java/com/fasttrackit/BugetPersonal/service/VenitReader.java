@@ -31,37 +31,35 @@ public class VenitReader {
             return Files.lines(Path.of(fileVenituriPath))
                     .map(this::lineToVenituri)
                     .collect(Collectors.toList());
-        } catch (IOException e){
-            throw new RuntimeException(e);}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Venit lineToVenituri(String line) {
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
+        Date dataVenit = null;
+    try {
+
+        dataVenit = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+    }
+    catch (ParseException exception){
+            exception.printStackTrace();
+    }
 //        LocalDate data = null;
-//
 //        try {
-//            data = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
-//        }
-//        catch (ParseException exception){
-//            exception.printStackTrace();
-//        }
-
-
-        LocalDate data = null;
-        try {
-            //LocalDate data = LocalDate.parse(dataParts);
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
-            data = (LocalDate) DateTimeFormatter.ofPattern("dd-MM-YYYY").parse(dataParts);
-
-        } catch
-        (Exception e) {
-            System.out.println(e);
-        }
-        ;
+//            //LocalDate data = LocalDate.parse(dataParts);
+//            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+//            data = (LocalDate) DateTimeFormatter.ofPattern("dd-MM-YYYY").parse(dataParts);
+//
+//        } catch
+//        (Exception e) {
+//            System.out.println(e);
+//        };
 
         return new Venit(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
-                data, TipVenit.valueOf(splitLine[3]));
+                dataVenit, TipVenit.valueOf(splitLine[3]));
 
     }
 

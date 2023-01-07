@@ -7,20 +7,28 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface VenitRepository extends JpaRepository<Venit, Integer> {
-    @Query("select v from Venit v where (v.valoare=:valoare or :valoare is null)" +
-    " and (to_char(v.data, 'dd-mm-yyyy')=:dataVenit or :dataVenit is null)")
+
+
+//    @Query(value = "SELECT id, function('date_format', v.data, '%Y, %m, %d') as dataVenit, valoare, tip FROM Venit v " +
+//            "WHERE (v.data=:data or :data is null) and (v.valoare=:valoare or :valoare is null)")
+
+
+    @Query(value = "SELECT * FROM Venit v WHERE (v.data=:data or :data is null)" +
+            " and (v.valoare=:valoare or :valoare is null)",
+            nativeQuery = true)
+
+//    @Query("select v from Venit v where (v.valoare=:valoare or :valoare is null)" +
+//            " and (v.data=:data or :data is null)")
     List<Venit> getByValoareDataVenit(@Param("valoare") Double valoare,
-                                      @Param("dataVenit") LocalDate dataVenit);
+                                      @Param("data") Date data);
 
 
-    @Query("select c from Cheltuiala c where (c.valoare=:valoare or :valoare is null)" +
-            " and (to_char(c.data, 'dd-mm-yyyy')=:dataCheltuiala or :dataCheltuiala is null)")
-    List<Cheltuiala> getByValoareDataCheltuiala(@Param("valoare") Double valoare,
-                                                @Param("dataCheltuiala") Date dataCheltuiala);
+
 }

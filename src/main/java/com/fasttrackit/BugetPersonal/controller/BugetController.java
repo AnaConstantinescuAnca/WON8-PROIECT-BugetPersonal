@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
 
 @RequiredArgsConstructor
 @RestController
-//@RequestMapping(value = {"venituri", "cheltuieli"})  //http://localhost:8080/venituri; //http://localhost:8080/cheltuieli
 @RequestMapping(value = "buget")  //http://localhost:8080/buget;
 
 public class BugetController {
@@ -21,8 +21,7 @@ public class BugetController {
 
     @GetMapping(value = "/venituri")
     public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
-                                      @RequestParam(required = false) LocalDate data)
-                                        {
+                                      @RequestParam(required = false) Date data) {
         return bugetService.getVenituriFiltered(valoare, data).stream().toList();
         //return bugetService.getAllVenituri().stream().toList();
 
@@ -42,15 +41,22 @@ public class BugetController {
         return venit;
     }
 
-    @GetMapping("/cheltuieli/{id}") // GET http://host:port/buget/venituri/3
+    @GetMapping("/cheltuieli/{id}") // GET http://host:port/buget/cheltuieli/3
     public Cheltuiala getByIdCheltuiala(@PathVariable Integer id) {
         Cheltuiala cheltuiala = bugetService.getByIdCheltuiala(id);
         cheltuiala.getId();
         return cheltuiala;
     }
+
     @DeleteMapping("/venituri/{id}") // DELETE http://host:port/buget/venituri/3
-    public Venit deleteVenitById(@PathVariable Integer id) {
+    public Venit deleteVenitById(@PathVariable int id) {
         return bugetService.deleteVenitById(id);
+
+    }
+
+    @DeleteMapping("/cheltuieli/{id}") // DELETE http://host:port/buget/cheltuieli/3
+    public Cheltuiala deleteCheltuialaById(@PathVariable int id) {
+        return bugetService.deleteCheltuialaById(id);
 
     }
 
@@ -67,9 +73,17 @@ public class BugetController {
 
 
     @PostMapping("/venituri/{id}/cheltuieli")
-    Venit addCheltuialaToVenit(@PathVariable Integer id, @RequestBody Cheltuiala cheltuiala) {
+    Venit addCheltuialaToVenit(@PathVariable int id, @RequestBody Cheltuiala cheltuiala) {
         return bugetService.addCheltuialaToVenit(id, cheltuiala);
-        //return countryService.addCityToCountry(id, city);
+    }
+
+    @PutMapping("/venituri/{id}")
+    Venit updateVenit(@PathVariable int id, @RequestBody Venit venit){
+        return bugetService.updateVenit(id, venit);
+    }
+    @PutMapping("/cheltuieli/{id}")
+    Cheltuiala updateCheltuiala(@PathVariable int id, @RequestBody Cheltuiala cheltuiala){
+        return bugetService.updateCheltuiala(id, cheltuiala);
     }
 
 
