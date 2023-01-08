@@ -4,6 +4,7 @@ import com.fasttrackit.BugetPersonal.model.Cheltuiala;
 import com.fasttrackit.BugetPersonal.model.Venit;
 import com.fasttrackit.BugetPersonal.service.BugetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class BugetController {
 
     @GetMapping(value = "/venituri")
     public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
-                                      @RequestParam(required = false) Date data) {
+                                      @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date data) {
         return bugetService.getVenituriFiltered(valoare, data).stream().toList();
         //return bugetService.getAllVenituri().stream().toList();
 
@@ -29,7 +30,7 @@ public class BugetController {
 
     @GetMapping(value = "/cheltuieli")
     public List<Cheltuiala> getAllCheltuieli(@RequestParam(required = false) Double valoare,
-                                             @RequestParam(required = false) Date data) {
+                                             @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date data) {
         return bugetService.getCheltuieliFiltered(valoare, data).stream().toList();
 
     }

@@ -40,14 +40,17 @@ public class VenitReader {
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
         Date dataVenit = null;
-    try {
-
-        dataVenit = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
-    }
-    catch (ParseException exception){
+        try {
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+            dataVenit = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+        } catch (ParseException exception) {
             exception.printStackTrace();
-    }
-//        LocalDate data = null;
+        }
+//        System.out.println(e);
+//    catch (ParseException exception){
+//            exception.printStackTrace();
+//    }
+        //LocalDate data = null;
 //        try {
 //            //LocalDate data = LocalDate.parse(dataParts);
 //            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
@@ -60,6 +63,7 @@ public class VenitReader {
 
         return new Venit(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
                 dataVenit, TipVenit.valueOf(splitLine[3]));
+
 
     }
 

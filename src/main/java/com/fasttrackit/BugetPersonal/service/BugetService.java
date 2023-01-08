@@ -6,10 +6,10 @@ import com.fasttrackit.BugetPersonal.model.Venit;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collection;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -46,7 +46,7 @@ public class BugetService {
                 .orElseThrow(() -> new ResourceNotFoundException("Venitul lipseste", id));
     }
 
-    public Cheltuiala getByIdCheltuiala(Integer id) {
+    public Cheltuiala getByIdCheltuiala(int id) {
         return cheltuialaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cheltuiala lipseste", id));
     }
@@ -95,4 +95,4 @@ public class BugetService {
         return cheltuialaRepository.save(cheltuialaToBeUpdated);
     }
 
-   }
+    }
