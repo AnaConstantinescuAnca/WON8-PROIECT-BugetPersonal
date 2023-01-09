@@ -16,6 +16,7 @@ public class Cheltuiala {
     private int id;
     @Column
     private double valoare;
+    @Temporal(value = TemporalType.DATE)
     @Column
     private Date data;
     @Column

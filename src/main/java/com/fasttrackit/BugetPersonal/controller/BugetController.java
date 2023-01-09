@@ -70,7 +70,6 @@ public class BugetController {
     public Cheltuiala add(@RequestBody Cheltuiala cheltuiala) {
         return bugetService.add(cheltuiala);
     }
-    //insert into cheltuiala (id,  data, tip, valoare, venit_id) values(104, '2023-01-01 00:00:00', 1, 101, 4)
 
 
     @PostMapping("/venituri/{id}/cheltuieli")

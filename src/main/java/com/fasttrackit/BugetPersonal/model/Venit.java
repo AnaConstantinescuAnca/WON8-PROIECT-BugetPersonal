@@ -1,6 +1,7 @@
 package com.fasttrackit.BugetPersonal.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,9 @@ public class Venit {
     private int id;
     @Column
     private double valoare;
+
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column
     private Date data;
     @Column
