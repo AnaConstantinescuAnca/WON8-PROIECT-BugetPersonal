@@ -2,8 +2,6 @@ package com.fasttrackit.BugetPersonal.service;
 
 import com.fasttrackit.BugetPersonal.model.Cheltuiala;
 import com.fasttrackit.BugetPersonal.model.TipCheltuiala;
-import com.fasttrackit.BugetPersonal.model.TipVenit;
-import com.fasttrackit.BugetPersonal.model.Venit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -33,20 +31,19 @@ public class CheltuialaReader {
     }
 
     private Cheltuiala lineToCheltuieli(String line)  {
-       // String[] cheltuitParts = line.split("\\|");
         String[] splitLine = line.split("\\|");
         String dataParts = splitLine[1];
-        Date date1 = null;
+        Date dataCheltuiala = null;
 
         try {
-            date1 = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
+            dataCheltuiala = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
         }
         catch (ParseException exception){
                 exception.printStackTrace();
         }
 
         return new Cheltuiala(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
-                date1, TipCheltuiala.valueOf(splitLine[3]));
+                dataCheltuiala, TipCheltuiala.valueOf(splitLine[3]));
 
     }
 

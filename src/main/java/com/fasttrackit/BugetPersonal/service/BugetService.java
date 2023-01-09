@@ -2,14 +2,19 @@ package com.fasttrackit.BugetPersonal.service;
 
 import com.fasttrackit.BugetPersonal.exception.ResourceNotFoundException;
 import com.fasttrackit.BugetPersonal.model.Cheltuiala;
+import com.fasttrackit.BugetPersonal.model.TipCheltuiala;
+import com.fasttrackit.BugetPersonal.model.TipVenit;
 import com.fasttrackit.BugetPersonal.model.Venit;
+import org.hibernate.dialect.JDataStoreDialect;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 
 import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -37,7 +42,7 @@ public class BugetService {
         return venitRepository.save(venit);
     }
 
-    public Cheltuiala add(Cheltuiala cheltuiala){
+    public Cheltuiala add(Cheltuiala cheltuiala) {
         return cheltuialaRepository.save(cheltuiala);
     }
 
@@ -51,12 +56,12 @@ public class BugetService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cheltuiala lipseste", id));
     }
 
-    public List<Venit> getVenituriFiltered(Double valoare, Date data) {
-        return venitRepository.getByValoareDataVenit(valoare, data);
+    public List<Venit> getVenituriFiltered(Double valoare, TipVenit tip, Date data) {
+        return venitRepository.getByValoareTipDataVenit(valoare, tip, data);
     }
 
-    public List<Cheltuiala> getCheltuieliFiltered(Double valoare, Date data) {
-        return cheltuialaRepository.getByValoareDataCheltuiala(valoare, data);
+    public List<Cheltuiala> getCheltuieliFiltered(Double valoare, TipCheltuiala tip, Date data) {
+        return cheltuialaRepository.getByValoareTipDataCheltuiala(valoare, tip, data);
     }
 
     public Venit addCheltuialaToVenit(int id, Cheltuiala cheltuiala) {
@@ -95,4 +100,28 @@ public class BugetService {
         return cheltuialaRepository.save(cheltuialaToBeUpdated);
     }
 
+    public Venit patch(int id, Date data, double diffValoare) {
+        Venit venitToBeUpdated = getByIdVenit(id);
+        venitToBeUpdated.setData(data);
+        venitToBeUpdated.setValoare(venitToBeUpdated.getValoare() + diffValoare);
+        return venitRepository.save(venitToBeUpdated);
     }
+
+    public Map<Date, List<Venit>> getVenituriByData(Date data) {
+        return venitRepository.getVenituriByData(data)
+                .stream()
+                .collect(Collectors.groupingBy(Venit::getData));
+    }
+
+    public Map<TipVenit, List<Venit>> getVenituriByTip(TipVenit tip) {
+        return venitRepository.getVenituriByTip(tip)
+                .stream()
+                .collect(Collectors.groupingBy(Venit::getTip));
+    }
+
+    public Map<Date, List<Cheltuiala>> getCheltuieliByData(Date data) {
+        return cheltuialaRepository.getCheltuieliByData(data)
+                .stream()
+                .collect(Collectors.groupingBy(Cheltuiala::getData));
+    }
+}

@@ -41,29 +41,13 @@ public class VenitReader {
         String dataParts = splitLine[1];
         Date dataVenit = null;
         try {
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
             dataVenit = new SimpleDateFormat("dd-MM-yyyy").parse(dataParts);
         } catch (ParseException exception) {
             exception.printStackTrace();
         }
-//        System.out.println(e);
-//    catch (ParseException exception){
-//            exception.printStackTrace();
-//    }
-        //LocalDate data = null;
-//        try {
-//            //LocalDate data = LocalDate.parse(dataParts);
-//            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
-//            data = (LocalDate) DateTimeFormatter.ofPattern("dd-MM-YYYY").parse(dataParts);
-//
-//        } catch
-//        (Exception e) {
-//            System.out.println(e);
-//        };
 
         return new Venit(Integer.parseInt(splitLine[0]), Double.parseDouble(splitLine[2]),
                 dataVenit, TipVenit.valueOf(splitLine[3]));
-
 
     }
 

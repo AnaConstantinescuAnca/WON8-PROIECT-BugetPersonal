@@ -24,7 +24,7 @@ public class Venit {
     private double valoare;
 
     @Temporal(value = TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+   // @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column
     private Date data;
     @Column
