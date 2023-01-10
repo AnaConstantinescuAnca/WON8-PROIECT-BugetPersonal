@@ -1,17 +1,20 @@
 package com.fasttrackit.BugetPersonal.service;
 
 import com.fasttrackit.BugetPersonal.exception.ResourceNotFoundException;
-import com.fasttrackit.BugetPersonal.model.Cheltuiala;
-import com.fasttrackit.BugetPersonal.model.TipCheltuiala;
-import com.fasttrackit.BugetPersonal.model.TipVenit;
-import com.fasttrackit.BugetPersonal.model.Venit;
+import com.fasttrackit.BugetPersonal.model.*;
 
+import org.springframework.data.annotation.Immutable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
+import static java.util.stream.Collectors.groupingBy;
 
 
 @Service
@@ -19,12 +22,14 @@ public class BugetService {
     private final VenitRepository venitRepository;
     private final CheltuialaRepository cheltuialaRepository;
 
+
     public BugetService(VenitReader venitReader, VenitRepository venitRepository,
                         CheltuialaReader cheltuialaReader, CheltuialaRepository cheltuialaRepository) {
         this.venitRepository = venitRepository;
         this.cheltuialaRepository = cheltuialaRepository;
         venitRepository.saveAll((venitReader.getVenituri()));
         cheltuialaRepository.saveAll(cheltuialaReader.getCheltuieli());
+
     }
 
     public List<Venit> getAllVenituri() {
@@ -107,24 +112,46 @@ public class BugetService {
     public Map<Date, List<Venit>> getVenituriByData(Date data) {
         return venitRepository.getVenituriByData(data)
                 .stream()
-                .collect(Collectors.groupingBy(Venit::getData));
+                .collect(groupingBy(Venit::getData));
     }
 
     public Map<TipVenit, List<Venit>> getVenituriByTip(TipVenit tip) {
         return venitRepository.getVenituriByTip(tip)
                 .stream()
-                .collect(Collectors.groupingBy(Venit::getTip));
+                .collect(groupingBy(Venit::getTip));
     }
 
     public Map<Date, List<Cheltuiala>> getCheltuieliByData(Date data) {
         return cheltuialaRepository.getCheltuieliByData(data)
                 .stream()
-                .collect(Collectors.groupingBy(Cheltuiala::getData));
+                .collect(groupingBy(Cheltuiala::getData));
     }
 
     public Map<TipCheltuiala, List<Cheltuiala>> getCheltuieliByTip(TipCheltuiala tip) {
         return cheltuialaRepository.getCheltuieliTip(tip)
                 .stream()
-                .collect(Collectors.groupingBy(Cheltuiala::getTip));
+                .collect(groupingBy(Cheltuiala::getTip));
     }
+
+    public Map<Date, List<Venit>> getVenituriByAnLuna(String anLuna) {
+        return venitRepository.getVenituriByAnLuna(anLuna)
+                .stream()
+                .collect(groupingBy(Venit::getData));
+    }
+
+
+    public Map<CheltuieliAnLunaTip, List<Cheltuiala>> getCheltuieliByAnLunaTip(String anLuna, TipCheltuiala tip) {
+        return cheltuialaRepository.getCheltuieliByAnLunaTip(anLuna, tip)
+                .stream()
+                .collect(groupingBy(cheltuiala -> new CheltuieliAnLunaTip(cheltuiala.getData(), cheltuiala.getTip())));
+
+//        ImmutablePair<String, TipCheltuiala> pair = new ImmutablePair<>(anLuna, tip);
+//        String key = pair.getKey();
+//        TipCheltuiala value = pair.getValue();
+//        return cheltuialaRepository.getCheltuieliByAnLunaTip(anLuna, tip)
+//                .stream()
+//                .collect(groupingBy(che -> pair<>()));
+//
+  }
 }
+

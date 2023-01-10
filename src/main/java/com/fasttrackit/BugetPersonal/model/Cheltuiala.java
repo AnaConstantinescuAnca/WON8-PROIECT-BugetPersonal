@@ -33,4 +33,6 @@ public class Cheltuiala {
         this.data = data;
         this.tip = tip;
     }
+
+
 }

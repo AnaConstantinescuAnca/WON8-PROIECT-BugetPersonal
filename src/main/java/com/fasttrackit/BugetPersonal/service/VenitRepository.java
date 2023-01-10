@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public interface VenitRepository extends JpaRepository<Venit, Integer> {
 
     @Query("SELECT v FROM Venit v WHERE v.data=:data ")
     List<Venit> getVenituriByData(@Param("data") Date data);
+
+    @Query(nativeQuery=true, value = "SELECT * FROM Venit v WHERE substring(to_char(v.data, 'yyyy-MM-dd'),1,7)=:anLuna")
+    List<Venit> getVenituriByAnLuna(@Param("anLuna") String anLuna );
 
 
 }

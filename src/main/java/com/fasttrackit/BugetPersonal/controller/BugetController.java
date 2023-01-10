@@ -1,14 +1,12 @@
 package com.fasttrackit.BugetPersonal.controller;
 
-import com.fasttrackit.BugetPersonal.model.Cheltuiala;
-import com.fasttrackit.BugetPersonal.model.TipCheltuiala;
-import com.fasttrackit.BugetPersonal.model.TipVenit;
-import com.fasttrackit.BugetPersonal.model.Venit;
+import com.fasttrackit.BugetPersonal.model.*;
 import com.fasttrackit.BugetPersonal.service.BugetService;
 import com.fasttrackit.BugetPersonal.controller.dto.PatchVenitRequest;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -95,16 +93,30 @@ public class BugetController {
         return bugetService.patch(id, request.data(), request.diffValoare());
     }
 
+    @GetMapping(value ="/reports/venituri")
+    public Map<TipVenit, List<Venit>> reportByTipVenit(@RequestParam TipVenit tip)
+    {
+        return bugetService.getVenituriByTip(tip);
+    }
+
     @GetMapping(value ="/reports/venituri/{data}")
     public Map<Date, List<Venit>> reportByDataVenit(@PathVariable Date data)
     {
         return bugetService.getVenituriByData(data);
     }
 
-    @GetMapping(value ="/reports/venituri")
-    public Map<TipVenit, List<Venit>> reportByTipVenit(@RequestParam TipVenit tip)
+
+    @GetMapping(value ="/reports/group/venituri")
+    public Map<Date, List<Venit>> reportByAnLunaVenit(@RequestParam String anLuna)
     {
-        return bugetService.getVenituriByTip(tip);
+        return bugetService.getVenituriByAnLuna(anLuna);
+    }
+
+    @GetMapping(value ="/reports/group/cheltuieli")
+    public Map<CheltuieliAnLunaTip, List<Cheltuiala>> reportByAnLunaCheltuiala(@RequestParam(required = false) String anLuna,
+                                                                               @RequestParam(required = false) TipCheltuiala tip)
+    {
+        return bugetService.getCheltuieliByAnLunaTip(anLuna, tip);
     }
 
     @GetMapping(value ="/reports/cheltuieli/{data}")
