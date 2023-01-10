@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public interface VenitRepository extends JpaRepository<Venit, Integer> {
                                       @Param("tip") TipVenit tip,
                                       @Param("data") Date data);
 
-    @Query("SELECT v FROM Venit v WHERE v.tip=:tip or :tip is null")
+    @Query("SELECT v FROM Venit v WHERE v.tip=:tip ")
     List<Venit> getVenituriByTip(@Param("tip") TipVenit tip);
 
     @Query("SELECT v FROM Venit v WHERE v.data=:data ")

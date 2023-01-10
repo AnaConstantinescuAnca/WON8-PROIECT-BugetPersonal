@@ -5,11 +5,8 @@ import com.fasttrackit.BugetPersonal.model.Cheltuiala;
 import com.fasttrackit.BugetPersonal.model.TipCheltuiala;
 import com.fasttrackit.BugetPersonal.model.TipVenit;
 import com.fasttrackit.BugetPersonal.model.Venit;
-import org.hibernate.dialect.JDataStoreDialect;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDate;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -123,5 +120,11 @@ public class BugetService {
         return cheltuialaRepository.getCheltuieliByData(data)
                 .stream()
                 .collect(Collectors.groupingBy(Cheltuiala::getData));
+    }
+
+    public Map<TipCheltuiala, List<Cheltuiala>> getCheltuieliByTip(TipCheltuiala tip) {
+        return cheltuialaRepository.getCheltuieliTip(tip)
+                .stream()
+                .collect(Collectors.groupingBy(Cheltuiala::getTip));
     }
 }

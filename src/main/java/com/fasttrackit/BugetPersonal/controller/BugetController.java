@@ -6,18 +6,15 @@ import com.fasttrackit.BugetPersonal.model.TipVenit;
 import com.fasttrackit.BugetPersonal.model.Venit;
 import com.fasttrackit.BugetPersonal.service.BugetService;
 import com.fasttrackit.BugetPersonal.controller.dto.PatchVenitRequest;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.http.RequestEntity.patch;
 
 
 @RequiredArgsConstructor
@@ -30,16 +27,16 @@ public class BugetController {
     @GetMapping(value = "/venituri")  //http://localhost:8080/buget/venituri
     public List<Venit> getAllVenituri(@RequestParam(required = false) Double valoare,
                                       @RequestParam(required = false) TipVenit tip,
-                                      @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date data) {
+                                      @RequestParam(required = false)  Date data) {
         return bugetService.getVenituriFiltered(valoare, tip, data).stream().toList();
         //return bugetService.getAllVenituri().stream().toList();
 
     }
 
-    @GetMapping(value = "/cheltuieli")  //http://localhost:8080/buget/cheltuieli
+    @GetMapping(value = "/cheltuieli")  //http://localhost:8080/buget/cheltuieli?valoare=200&tip=TRANSPORT&data=2022-09-01
     public List<Cheltuiala> getAllCheltuieli(@RequestParam(required = false) Double valoare,
                                              @RequestParam(required = false) TipCheltuiala tip,
-                                             @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date data) {
+                                             @RequestParam(required = false) Date data) {
         return bugetService.getCheltuieliFiltered(valoare, tip, data).stream().toList();
 
     }
@@ -104,8 +101,8 @@ public class BugetController {
         return bugetService.getVenituriByData(data);
     }
 
-    @GetMapping(value ="/reports/venituri/{tip}")
-    public Map<TipVenit, List<Venit>> reportByTipVenit(@PathVariable TipVenit tip)
+    @GetMapping(value ="/reports/venituri")
+    public Map<TipVenit, List<Venit>> reportByTipVenit(@RequestParam TipVenit tip)
     {
         return bugetService.getVenituriByTip(tip);
     }
@@ -116,4 +113,9 @@ public class BugetController {
         return bugetService.getCheltuieliByData(data);
     }
 
+    @GetMapping(value ="/reports/cheltuieli")
+    public Map<TipCheltuiala, List<Cheltuiala>> reportByTipCheltuiala(@RequestParam TipCheltuiala tip)
+    {
+        return bugetService.getCheltuieliByTip(tip);
+    }
 }
