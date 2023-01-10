@@ -93,39 +93,40 @@ public class BugetController {
         return bugetService.patch(id, request.data(), request.diffValoare());
     }
 
-    @GetMapping(value ="/reports/venituri")
+
+    @GetMapping(value ="/reports/venituri")  //nu imi trebuie
     public Map<TipVenit, List<Venit>> reportByTipVenit(@RequestParam TipVenit tip)
     {
         return bugetService.getVenituriByTip(tip);
     }
 
-    @GetMapping(value ="/reports/venituri/{data}")
+    @GetMapping(value ="/reports/venituri/{data}")  // nu imi trebuie
     public Map<Date, List<Venit>> reportByDataVenit(@PathVariable Date data)
     {
         return bugetService.getVenituriByData(data);
     }
 
 
-    @GetMapping(value ="/reports/group/venituri")
+    @GetMapping(value ="/reports/group/venituri")  //functioneaza
     public Map<Date, List<Venit>> reportByAnLunaVenit(@RequestParam String anLuna)
     {
         return bugetService.getVenituriByAnLuna(anLuna);
     }
 
-    @GetMapping(value ="/reports/group/cheltuieli")
-    public Map<CheltuieliAnLunaTip, List<Cheltuiala>> reportByAnLunaCheltuiala(@RequestParam(required = false) String anLuna,
+    @GetMapping(value ="/reports/group/cheltuieli")  // functioneaza doar cu param anLuna
+    public Map<CheltuieliAnLunaTip, List<Cheltuiala>> reportByAnLunaTipCheltuiala(@RequestParam(required = false) String anLuna,
                                                                                @RequestParam(required = false) TipCheltuiala tip)
     {
         return bugetService.getCheltuieliByAnLunaTip(anLuna, tip);
     }
 
-    @GetMapping(value ="/reports/cheltuieli/{data}")
+    @GetMapping(value ="/reports/cheltuieli/{data}")   //nu imi trebuie
     public Map<Date, List<Cheltuiala>> reportByDataCheltuiala(@PathVariable Date data)
     {
         return bugetService.getCheltuieliByData(data);
     }
 
-    @GetMapping(value ="/reports/cheltuieli")
+    @GetMapping(value ="/reports/cheltuieli")   // nu imi trebuie, nu functioneaza!!!!!!!!!!
     public Map<TipCheltuiala, List<Cheltuiala>> reportByTipCheltuiala(@RequestParam TipCheltuiala tip)
     {
         return bugetService.getCheltuieliByTip(tip);

@@ -25,12 +25,12 @@ public interface CheltuialaRepository extends JpaRepository<Cheltuiala, Integer>
     @Query("SELECT c FROM Cheltuiala c WHERE c.data=:data")
     List<Cheltuiala> getCheltuieliByData(@Param("data") Date data);
 
-    @Query("SELECT c FROM Cheltuiala c WHERE c.tip =: tip")
+    @Query("SELECT c FROM Cheltuiala c WHERE c.tip =:tip")
     List<Cheltuiala> getCheltuieliTip(@Param("tip") TipCheltuiala tip);
 
     @Query(nativeQuery = true, value = "SELECT * FROM Cheltuiala c WHERE" +
-            " (substring(to_char(c.data, 'yyyy-MM-dd'),1,7)=:anLuna or :anLuna is null)" +
-            " and (c.tip=:tip or :tip is null)")
+            " substring(to_char(c.data, 'yyyy-MM-dd'),1,7)=:anLuna" +
+            " and c.tip=:tip")
     List<Cheltuiala> getCheltuieliByAnLunaTip(@Param("anLuna") String anLuna,
                                             @Param("tip") TipCheltuiala tip);
 
